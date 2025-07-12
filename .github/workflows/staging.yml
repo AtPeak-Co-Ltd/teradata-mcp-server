@@ -1,0 +1,20 @@
+name: STAGING - Teradata mcp server
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to deploy"
+        default: 'main'
+        required: true
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/build.yml
+    with:
+      branch: ${{ github.event.inputs.branch }}
+      ecr_url: '682570329710.dkr.ecr.ap-northeast-1.amazonaws.com'
+      ecr_repo: 'mcp-teradata-custom-server'
+    secrets:
+      aws_access_key_id: ${{ secrets.AWS_CICD_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}

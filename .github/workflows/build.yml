@@ -12,6 +12,10 @@ on:
       ecr_repo:
         required: true
         type: string
+      label:
+        required: true
+        type: string
+
     secrets:
       aws_access_key_id:
         required: true
@@ -21,7 +25,6 @@ on:
 jobs:
   build:
     runs-on:
-      - self-hosted
       - ${{ inputs.label }}
     steps:
       - name: Checkout code

@@ -802,6 +802,7 @@ async def main():
     if mcp_transport == "sse":
         mcp.settings.host = os.getenv("MCP_HOST")
         mcp.settings.port = int(os.getenv("MCP_PORT"))
+        open("/tmp/.alive", "w").close()
         logger.info(f"Starting MCP server on {mcp.settings.host}:{mcp.settings.port}")
         await mcp.run_sse_async()
     elif mcp_transport == "streamable-http":
@@ -826,6 +827,9 @@ async def shutdown(sig=None):
     global shutdown_in_progress, _tdconn
     
     logger.info("Shutting down server")
+
+    if os.path.exists("/tmp/.alive"):
+        os.remove("/tmp/.alive")
     if shutdown_in_progress:
         logger.info("Forcing immediate exit")
         os._exit(1)  # Use immediate process termination instead of sys.exit

@@ -54,6 +54,8 @@ jobs:
         uses: docker/build-push-action@v2.9.0
         with:
           push: true
+          platforms: linux/amd64
+          builder: default
           file: ./Dockerfile
           context: .
           tags: ${{ inputs.ecr_url }}/${{ inputs.ecr_repo }}:1.0.${{ github.run_number }}

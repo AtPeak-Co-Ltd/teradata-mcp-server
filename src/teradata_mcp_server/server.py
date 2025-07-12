@@ -35,6 +35,10 @@ logger.info("Starting Teradata MCP server")
 # Connect to MCP server
 mcp = FastMCP("teradata-mcp-server")
 
+@mcp.app.get("/healthz")
+async def health_check():
+    return {"status": "ok"}
+
 #global shutdown flag
 shutdown_in_progress = False
 

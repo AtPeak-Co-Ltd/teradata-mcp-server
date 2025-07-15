@@ -2,11 +2,14 @@ import logging
 from teradatasql import TeradataConnection 
 from typing import Optional, Any, Dict, List
 import json
+import os
 from datetime import date, datetime
 from decimal import Decimal
 from teradata_mcp_server.tools.evs_connect import get_evs
 
 logger = logging.getLogger("teradata_mcp_server")
+
+META_TABLE_ENV = os.getenv("META_TABLE") or "FAQ_DEMO"
 
 def serialize_teradata_types(obj: Any) -> Any:
     """Convert Teradata-specific types to JSON serializable formats"""
@@ -155,7 +158,7 @@ def handle_evs_similarity_search_getAnswerOnly(
     conn: TeradataConnection,
     question: str,
     top_k: int = 2,
-    faq_tbl: str = "FAQ_DEMO",
+    faq_tbl: str = META_TABLE_ENV,
     *args, **kwargs,
 ) -> str:
     """

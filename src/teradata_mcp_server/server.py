@@ -519,6 +519,17 @@ async def vector_store_similarity_search(
         top_k=top_k,
     )
 
+@mcp.tool(description="Enterprise Vector Store ‑ best answer only")
+async def vector_store_best_answer(
+     question: str = Field(description="Natural language question"),
+     top_k: int = Field(2, description="rows to inspect before picking best"),
+ ) -> ResponseType:
+
+     return execute_db_tool(
+         td.evs_tools.handle_evs_similarity_search_getAnswerOnly,
+         question=question,
+         top_k=top_k,
+     )
 
 
 #--------------- Feature Store Tools ---------------#
